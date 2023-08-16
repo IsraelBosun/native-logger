@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "native-login",
-    "slug": "native-login",
+    "name": "Logger",
+    "slug": "Logger",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -21,10 +21,16 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.israelbosun.Logger"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "ae48452c-da3b-4495-96d9-2f19b2625f7e"
+      }
     }
   }
 }
