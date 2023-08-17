@@ -1,14 +1,33 @@
 import { View, Text, TouchableOpacity, Image, TextInput } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import tw from "twrnc"
 import { themeColors } from '../theme'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { ArrowLeftIcon } from "react-native-heroicons/solid"
 import { useNavigation } from '@react-navigation/native'
+import { createUserWithEmailAndPassword } from 'firebase/auth'
+import { auth } from '../config/firebase'
 
 export default function SignUpScreen() {
 
-  const navigation = useNavigation()
+  const navigation = useNavigation();
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleSubmit = async () => {
+    if (email && password) {
+      try {
+        await createUserWithEmailAndPassword(auth, email, password);
+      } catch (err) {
+        // console.log("got error", err.message)
+      }
+    }
+  }
+
+
+
+  
 
   return (
     <View style={[tw`flex-1 bg-white`, {backgroundColor: themeColors.bg}]}>
@@ -25,16 +44,16 @@ export default function SignUpScreen() {
       <View style={[tw`flex-1 bg-white px-8 pt-8 mt-2`, {borderTopLeftRadius: 50, borderTopRightRadius: 50}]}>
         <View style={tw`flex my-2 `}>
           <Text style={tw`text-gray-700 ml-4 mb-1`}>Full Name</Text>
-          <TextInput style={tw`p-4 bg-gray-100 text-gray-700 rounded-2xl mb-3`} value='Israel Lee' placeholder='Enter Fullname' />
+          <TextInput style={tw`p-4 bg-gray-100 text-gray-700 rounded-2xl mb-3`} value={name} onChangeText={value=> setName(value)} placeholder='Enter Fullname' />
           <Text style={tw`text-gray-700 ml-4 mb-1`}>Email Address</Text>
-          <TextInput style={tw`p-4 bg-gray-100 text-gray-700 rounded-2xl mb-3`} value='israeldev@gmail.com' placeholder='Enter Email' />
+          <TextInput style={tw`p-4 bg-gray-100 text-gray-700 rounded-2xl mb-3`} value={email} onChangeText={value=> setEmail(value)} placeholder='Enter Email' />
           <Text style={tw`text-gray-700 ml-4 mb-1`}>Password</Text>
-          <TextInput style={tw`p-4 bg-gray-100 text-gray-700 rounded-2xl mb-7`} secureTextEntry value='test1234' placeholder='Enter Password' />
+          <TextInput style={tw`p-4 bg-gray-100 text-gray-700 rounded-2xl mb-7`} secureTextEntry  value={password} onChangeText={value=> setPassword(value)} placeholder='Enter Password' />
           
           {/* <TouchableOpacity style={tw`flex items-end mb-5`}>
             <Text style={tw`text-gray-700`}>Forgot Password?</Text>
           </TouchableOpacity> */}
-          <TouchableOpacity style={tw`py-3 bg-yellow-400 rounded-xl`}>
+          <TouchableOpacity onPress={handleSubmit} style={tw`py-3 bg-yellow-400 rounded-xl`}>
             <Text style={tw`font-bold text-center text-gray-700`}>
               Sign Up
             </Text>
