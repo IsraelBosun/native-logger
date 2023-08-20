@@ -7,6 +7,7 @@ import { ArrowLeftIcon } from "react-native-heroicons/solid"
 import { useNavigation } from '@react-navigation/native'
 import { signInWithEmailAndPassword } from 'firebase/auth'
 import { auth } from '../config/firebase'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function LoginScreen() {
 
@@ -18,11 +19,23 @@ export default function LoginScreen() {
     if (email && password) {
       try {
         await signInWithEmailAndPassword(auth, email, password);
+        const jsonValue = JSON.stringify(auth);
+        await AsyncStorage.setItem('my-key', jsonValue);
+        alert(`${email} is signed in`)
+        console.log(auth)
       } catch (err) {
         console.log("got error", err.message)
       }
     }
   }
+
+
+
+
+
+
+
+
 
   return (
     <View style={[tw`flex-1 bg-white`, {backgroundColor: themeColors.bg}]}>
@@ -79,3 +92,25 @@ export default function LoginScreen() {
 
 // flex-row justify-center
 // flex items-center
+
+
+  // const storeData = async (auth) => {
+  //   try {
+  //     const jsonValue = JSON.stringify(auth);
+  //     await AsyncStorage.setItem('my-key', jsonValue);
+  //   } catch (e) {
+  //     console.log("something went wrong", e)
+  //     // saving error
+  //   }
+  // };
+
+  // const getData = async (auth) => {
+  //   try {
+  //     const jsonValue = await AsyncStorage.getItem('my-key');
+  //     let data = JSON.parse(jsonValue)
+  //     // return jsonValue != null ? JSON.parse(jsonValue) : null;
+  //   } catch (e) {
+  //     console.log("something went wrong", e)
+  //     // error reading value
+  //   }
+  // };

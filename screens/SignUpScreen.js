@@ -7,6 +7,7 @@ import { ArrowLeftIcon } from "react-native-heroicons/solid"
 import { useNavigation } from '@react-navigation/native'
 import { createUserWithEmailAndPassword } from 'firebase/auth'
 import { auth } from '../config/firebase'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export default function SignUpScreen() {
 
@@ -15,12 +16,26 @@ export default function SignUpScreen() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  // const handleSubmit = async () => {
+  //   if (email && password) {
+  //     try {
+  //       await createUserWithEmailAndPassword(auth, email, password);
+  //     } catch (err) {
+  //       // console.log("got error", err.message)
+  //     }
+  //   }
+  // }
+
   const handleSubmit = async () => {
     if (email && password) {
       try {
         await createUserWithEmailAndPassword(auth, email, password);
+        const jsonValue = JSON.stringify(auth);
+        await AsyncStorage.setItem('my-key', jsonValue);
+        alert(`${name} is signed up`)
+        console.log(auth)
       } catch (err) {
-        // console.log("got error", err.message)
+        console.log("got error", err.message)
       }
     }
   }

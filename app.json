@@ -2,8 +2,10 @@
   "expo": {
     "name": "Logger",
     "slug": "Logger",
+    "description": "This is a login sign-up demo app",
     "version": "1.0.0",
     "orientation": "portrait",
+    "jsEngine": "hermes",
     "icon": "./assets/favicon.png",
     "userInterfaceStyle": "light",
     "splash": {
@@ -15,12 +17,15 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "jsEngine": "jsc"
+
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#ffffff",
+        "jsEngine": "hermes"
       },
       "package": "com.israelbosun.Logger"
     },
